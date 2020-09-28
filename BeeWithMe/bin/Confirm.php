@@ -1,0 +1,16 @@
+<?php
+session_start();
+if(!isset($_SESSION['Email']) && !isset($_SESSION['Password']))
+{
+header('location:http://localhost/BeeWithMe/bin/index.php');
+}
+include("Connection.php");
+$mail=$_GET['Email'];
+$e=$_SESSION['Email'];
+$q="insert into friend(First_person,Second_person) values ('$e','$mail')";
+$q1="delete from friend_request where Send_by='$mail' && Received_by='$e'";
+$result=mysqli_query($con,$q) or die(mysqli_error($con));
+$result1=mysqli_query($con,$q1) or die(mysqli_error($con));
+header("location:http://localhost/BeeWithMe/bin/showpro.php?Email=$mail");
+mysqli_close($con);
+?>
